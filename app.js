@@ -10,7 +10,7 @@ app.get('/', function(req, res) {
 
 app.get('/campgrounds', function(req, res) {
     let campgrounds = [
-        { name: 'Salmon Creek', image: 'https://cdn.pixabay.com/photo/2015/07/10/17/24/night-839807_1280.jpg' }, { name: 'Eastfork', image: 'https://cdn.pixabay.com/photo/2017/11/16/09/59/camping-2953935_1280.jpg' }, { name: 'Lake Bluthe', image: 'https://cdn.pixabay.com/photo/2017/08/04/20/04/camping-2581242_1280.jpg' }
+        { name: 'Salmon Creek', image: 'https://i.pinimg.com/736x/5b/e7/98/5be798263495d773debdd710dff79435--camping-packing-lists-camping-checklist.jpg' }, { name: 'Eastfork Lake', image: 'https://www.visitnc.com/resimg.php/imgcrop/2/52908/image/800/448/KerrCamping.jpg' }, { name: 'Lake Bluthe', image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg' }
     ]
 
     res.render('campgrounds', { campgrounds: campgrounds });
