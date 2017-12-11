@@ -10,23 +10,28 @@ app.set('view engine', 'ejs');
 
 let campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 let Campground = mongoose.model('Campground', campgroundSchema)
 
-// Campground.create({
-//     name: 'Lake Bluth',
-//     image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg'
+Campground.create({
+    name: 'Lake Bluth',
+    image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg',
+    description: 'this is a large lake, with no bathrooms and lots of room'
 
-// }, function(err, campground) {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log('campground created');
-//         console.log(campground);
-//     }
-// });
+}, function(err, campground) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('campground created');
+        console.log(campground);
+    }
+});
+
+
+
 app.get('/', function(req, res) {
     res.render('landing');
 });
@@ -43,22 +48,24 @@ app.get('/campgrounds', function(req, res) {
 });
 
 app.post('/campgrounds', function(req, res) {
-    let name = req.body.name;
-    let image = req.body.image;
-    let newCampground = { name: name, image: image }
-    Campground.create(newCampground, function(err, newlyCreated) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect('/campgrounds');
-        }
+        let name = req.body.name;
+        let image = req.body.image;
+        let newCampground = { name: name, image: image }
+        Campground.create(newCampground, function(err, newlyCreated) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect('/campgrounds');
+            }
+        })
     })
-})
-
+    //route to get to new form
 app.get('/campgrounds/new', function(req, res) {
     res.render('new.ejs');
 })
 
+
+//server run confirmation
 app.listen(3000, function() {
     console.log('The YelpCamp Server has started');
 });
