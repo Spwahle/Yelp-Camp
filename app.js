@@ -16,19 +16,19 @@ let campgroundSchema = new mongoose.Schema({
 
 let Campground = mongoose.model('Campground', campgroundSchema)
 
-Campground.create({
-    name: 'Lake Bluth',
-    image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg',
-    description: 'this is a large lake, with no bathrooms and lots of room'
+// Campground.create({
+//     name: 'Lake Bluth',
+//     image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg',
+//     description: 'this is a large lake, with no bathrooms and lots of room'
 
-}, function(err, campground) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('campground created');
-        console.log(campground);
-    }
-});
+// }, function(err, campground) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('campground created');
+//         console.log(campground);
+//     }
+// });
 
 
 
@@ -41,10 +41,9 @@ app.get('/campgrounds', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.render('campgrounds', { campgrounds: allCampgrounds });
+            res.render('index', { campgrounds: allCampgrounds });
         }
     });
-    // res.render('campgrounds', { campgrounds: campgrounds });
 });
 
 app.post('/campgrounds', function(req, res) {
