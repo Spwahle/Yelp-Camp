@@ -7,21 +7,36 @@ mongoose.connect('mongodb://localhost/yelp_camp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-let campgrounds = [
-    { name: 'Salmon Creek', image: 'https://i.pinimg.com/736x/5b/e7/98/5be798263495d773debdd710dff79435--camping-packing-lists-camping-checklist.jpg' }, { name: 'Eastfork Lake', image: 'https://www.visitnc.com/resimg.php/imgcrop/2/52908/image/800/448/KerrCamping.jpg' }, { name: 'Lake Bluthe', image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg' }, { name: 'Salmon Creek', image: 'https://i.pinimg.com/736x/5b/e7/98/5be798263495d773debdd710dff79435--camping-packing-lists-camping-checklist.jpg' }, { name: 'Eastfork Lake', image: 'https://www.visitnc.com/resimg.php/imgcrop/2/52908/image/800/448/KerrCamping.jpg' }, { name: 'Lake Bluthe', image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg' },
-    { name: 'Salmon Creek', image: 'https://i.pinimg.com/736x/5b/e7/98/5be798263495d773debdd710dff79435--camping-packing-lists-camping-checklist.jpg' }, { name: 'Eastfork Lake', image: 'https://www.visitnc.com/resimg.php/imgcrop/2/52908/image/800/448/KerrCamping.jpg' }, { name: 'Lake Bluthe', image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg' }, { name: 'Salmon Creek', image: 'https://i.pinimg.com/736x/5b/e7/98/5be798263495d773debdd710dff79435--camping-packing-lists-camping-checklist.jpg' }, { name: 'Eastfork Lake', image: 'https://www.visitnc.com/resimg.php/imgcrop/2/52908/image/800/448/KerrCamping.jpg' }, { name: 'Lake Bluthe', image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg' }
 
-];
+let campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+
+let Campground = mongoose.model('Campground', campgroundSchema)
+
+// Campground.create({
+//     name: 'Lake Bluth',
+//     image: 'http://weknowyourdreams.com/images/camping/camping-07.jpg'
+
+// }, function(err, campground) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('campground created');
+//         console.log(campground);
+//     }
+// });
 app.get('/', function(req, res) {
     res.render('landing');
 });
 
 app.get('/campgrounds', function(req, res) {
-    Campground.find({}, function(err, allcampgrounds) {
+    Campground.find({}, function(err, allCampgrounds) {
         if (err) {
             console.log(err);
         } else {
-            res.render('campgounds', { campgrounds: campgrounds });
+            res.render('campgrounds', { campgrounds: allCampgrounds });
         }
     });
     // res.render('campgrounds', { campgrounds: campgrounds });
@@ -31,9 +46,13 @@ app.post('/campgrounds', function(req, res) {
     let name = req.body.name;
     let image = req.body.image;
     let newCampground = { name: name, image: image }
-    campgrounds.push(newCampground);
-    console.log(campgrounds)
-    res.redirect('/campgrounds');
+    Campground.create(newCampground, function(err, newlyCreated) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect('/campgrounds');
+        }
+    })
 })
 
 app.get('/campgrounds/new', function(req, res) {
@@ -43,3 +62,7 @@ app.get('/campgrounds/new', function(req, res) {
 app.listen(3000, function() {
     console.log('The YelpCamp Server has started');
 });
+
+app.get('/campgrounds/:id', function(req, res) {
+    res.send("this is the show page");
+})
