@@ -68,9 +68,10 @@ app.get('/campgrounds/:id', function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) {
             console.log(err);
-        } else {}
+        } else {
+            res.render("show", { campgrounds: foundCampground });
+        }
     });
-    res.send("show", { campground: foundCampground });
 });
 
 //server run confirmation
