@@ -47,28 +47,33 @@ app.get('/campgrounds', function(req, res) {
 });
 
 app.post('/campgrounds', function(req, res) {
-        let name = req.body.name;
-        let image = req.body.image;
-        let newCampground = { name: name, image: image }
-        Campground.create(newCampground, function(err, newlyCreated) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.redirect('/campgrounds');
-            }
-        })
-    })
-    //route to get to new form
+    let name = req.body.name;
+    let image = req.body.image;
+    let newCampground = { name: name, image: image }
+    Campground.create(newCampground, function(err, newlyCreated) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect('/campgrounds');
+        }
+    });
+});
+//route to get to new form
 app.get('/campgrounds/new', function(req, res) {
     res.render('new.ejs');
-})
+});
 
+//show - shows more info about one campground
+app.get('/campgrounds/:id', function(req, res) {
+    Campground.findById(req.params.id, function(err, foundCampground) {
+        if (err) {
+            console.log(err);
+        } else {}
+    });
+    res.send("show", { campground: foundCampground });
+});
 
 //server run confirmation
 app.listen(3000, function() {
     console.log('The YelpCamp Server has started');
 });
-
-app.get('/campgrounds/:id', function(req, res) {
-    res.send("this is the show page");
-})
