@@ -7,13 +7,14 @@ mongoose.connect('mongodb://localhost/yelp_camp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-
+//creating the campground schema
 let campgroundSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String
 });
 
+//creating a campground variable for ease of use
 let Campground = mongoose.model('Campground', campgroundSchema)
 
 // Campground.create({
@@ -31,11 +32,12 @@ let Campground = mongoose.model('Campground', campgroundSchema)
 // });
 
 
-
+//route for intial landing page
 app.get('/', function(req, res) {
     res.render('landing');
 });
 
+//route for listed campgrounds
 app.get('/campgrounds', function(req, res) {
     Campground.find({}, function(err, allCampgrounds) {
         if (err) {
@@ -46,6 +48,7 @@ app.get('/campgrounds', function(req, res) {
     });
 });
 
+//camprounds and their attributes
 app.post('/campgrounds', function(req, res) {
     let name = req.body.name;
     let image = req.body.image;
